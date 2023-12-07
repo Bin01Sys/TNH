@@ -23,22 +23,21 @@
 
 echo ""
 echo ""                                                                
-echo "mmmmmmm mmmmmmm mmmmmmm mmmmmmm mmmmmmm mmmmmmm mmmmmmm mmmmmmm mmmmmmm "
-echo "MM                                                                 MM   "
-echo "MM                                                                 MM   "
-echo "MM                MMP''MM''YMM 7MN.   7MF  7MMF    7MMF            MM   "
-echo "MM               P    MM   7   MMN.    M    MM      MM             MM   "
-echo "MM                   MM        M YMb   M    MM      MM             MM   "
-echo "MM                   MM        M  MN. M    MMmmmmmmMM              MM   "
-echo "MM                   MM        M   MM.M    MM      MM              MM   "
-echo "MM                  MM        M     YMM    MM      MM              MM   "
-echo "MM                .JMML.    .JML.    YM  .JMML.  .JMML.            MM   "
-echo "MM                                                                 MM   "
-echo "MM     AUTOR  : BIN01SYS AND ZER0G0LD                              MM   " 
-echo "MM     GITHUB BINSYS : https://github.com/Bin01Sys                 MM   "  
-echo "MM     GITHUB ZER0G0LD : https://github.com/Zer0G0ld               MM   "
-echo "MM                                                                 MM   "
-echo "mmmmmmm mmmmmmm mmmmmmm mmmmmmm mmmmmmm mmmmmmm mmmmmmm mmmmmmm mmmmmmm "
+
+echo "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM"
+echo "M			 _______  _   _  _    _			 M"
+echo "M			|__   __|| \ | || |  | |		 M"
+echo "M			   | |   |  \| || |__| |		 M"
+echo "M			   | |   |     ||  __  |	 	 M"
+echo "M			   | |   | |\  || |  | |		 M"
+echo "M			   |_|   |_| \_||_|  |_|		 M"
+echo "M								 M"
+echo "M	  AUTOR  : BIN01SYS AND ZER0G0LD			 M" 
+echo "M	  GITHUB BINSYS : https://github.com/Bin01Sys	 	 M"
+echo "M	  GITHUB ZER0G0LD : https://github.com/Zer0G0ld	 	 M"
+echo "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM"
+
+echo ""
 echo ""
 
 # Parar o script em caso de erro
@@ -78,22 +77,25 @@ get_battery_status() {
 
     echo "Nível de carga da tua bateria: $charge_level%"
     # Notificar quando a bateria atingir 20%
-    [ "$charge_level" -le 20 ] && termux-notification --title "Bateria Baixa" --content "A bateria está em $charge_level%. Carregue o dispositivo."
+    if [ "$charge_level" -le 20 ]; then
+	    termux-notification --title "Bateria Baixa" --content "A bateria está em $charge_level%. Carregue o dispositivo."
+    fi
 }
 
 get_network_info() {
-    # Obter informações da rede
+    # Obter informações da rede 
     check_and_install termux-network-status
-    
+   
     local result=$(termux-network-status)
     local connect_status=$(echo "$result" | jq -r '.isConnected')
 
     if [ "$connect_status" == true ]; then
-        echo "O dispositivo está conectado à internet."
+	    echo "O dispositivo está conectado à internet."
     else
-        echo "O dispositivo não está conectado à internet."
-        termux-notification --title "Sem Conexão de Rede" --content "O dispositivo está sem conexão de rede."
+	    echo "O dispositivo não está conectado à internet."
+	    termux-notification --title "Sem Conexão de Rede" --content "O dispositivo está sem conexão de rede."
     fi
+    
 }
 
 # Chamando as funções
