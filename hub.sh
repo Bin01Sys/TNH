@@ -1,6 +1,22 @@
 # Autor : Bin01Sys
 # Ajuda recebida de : Zer0G0ld
 # Licença do código GPL-3.0
+# TermuxNotifyHub - Seu Software de Notificação para Termux
+#
+# Copyright (C) [Bin01Sys && Zer0G0ld] [2023]
+#
+# Este programa é software livre: você pode redistribuí-lo e/ou modificá-lo
+# nos termos da Licença Pública Geral GNU conforme publicada pela Free Software
+# Foundation, na versão 3 da Licença, ou (a seu critério) qualquer versão posterior.
+#
+# Este programa é distribuído na esperança de que será útil,
+# mas SEM NENHUMA GARANTIA; sem mesmo a garantia implícita de
+# COMERCIALIZAÇÃO ou ADEQUAÇÃO A UM PROPÓSITO ESPECÍFICO. Consulte a
+# Licença Pública Geral GNU para obter mais detalhes.
+# 
+# Você deve ter recebido uma cópia da Licença Pública Geral GNU
+# junto com este programa. Se não, consulte http://www.gnu.org/licenses/.
+# 
 
 #!/usr/bin/bash
 
