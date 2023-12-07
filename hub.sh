@@ -57,7 +57,3 @@ check_tools termux-api
 check_tools jq
 get_battery_status
 get_network_info
-=======
-#!/usr/biin/bash
-
->>>>>>> 992d5040aadb7d0bf467ae2d7213dec8e0ce7942
