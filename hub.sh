@@ -17,11 +17,14 @@
 # Você deve ter recebido uma cópia da Licença Pública Geral GNU
 # junto com este programa. Se não, consulte http://www.gnu.org/licenses/.
 # 
+# ================================================
 
 #!/usr/bin/bash
 
 # Parar o script em caso de erro
 set -e
+
+
 
 install_tool() {
     tool_name=$1
@@ -36,9 +39,8 @@ install_tool() {
     echo "[ ✓ ] Instalação concluída com sucesso para $tool_name."
 }
 
-check_tools() {
+check_and_install() {
     tool_name=$1
-
     # Verifica se a ferramenta está disponível no sistema
     command -v "$tool_name" &> /dev/null || install_tool "$tool_name"
 }
@@ -67,9 +69,11 @@ get_network_info() {
 }
 
 # Chamando as funções
-check_tools termux-api
-check_tools jq
+check_and_install termux-api
+check_and_install jq
 get_battery_status
 get_network_info
+
+
 
 
