@@ -21,24 +21,25 @@
 
 #!/bin/bash
 
-echo """
-                                                                
-mmmmmmm mmmmmmm mmmmmmm mmmmmmm mmmmmmm mmmmmmm mmmmmmm mmmmmmm mmmmmmm
-MM                                                                 MM   
-MM                                                                 MM   
-MM                 MMP""MM""YMM `7MN.   `7MF'`7MMF'  `7MMF'        MM   
-MM                 P'   MM   `7   MMN.    M    MM      MM          MM   
-MM                      MM        M YMb   M    MM      MM          MM   
-MM                      MM        M  `MN. M    MMmmmmmmMM          MM   
-MM                      MM        M   `MM.M    MM      MM          MM   
-MM                      MM        M     YMM    MM      MM          MM   
-MM                    .JMML.    .JML.    YM  .JMML.  .JMML.        MM   
-MM     AUTOR  : BIN01SYS AND ZER0G0LD                              MM   
-MM     GITHUB BINSYS : https://github.com/Bin01Sys                 MM   
-MM     GITHUB ZER0G0LD : https://github.com/Zer0G0ld               MM
-MM                                                                 MM   
-mmmmmmm mmmmmmm mmmmmmm mmmmmmm mmmmmmm mmmmmmm mmmmmmm mmmmmmm mmmmmmm
-"""
+echo ""
+echo ""                                                                
+echo "mmmmmmm mmmmmmm mmmmmmm mmmmmmm mmmmmmm mmmmmmm mmmmmmm mmmmmmm mmmmmmm "
+echo "MM                                                                 MM   "
+echo "MM                                                                 MM   "
+echo "MM                MMP''MM''YMM 7MN.   7MF  7MMF    7MMF            MM   "
+echo "MM               P    MM   7   MMN.    M    MM      MM             MM   "
+echo "MM                   MM        M YMb   M    MM      MM             MM   "
+echo "MM                   MM        M  MN. M    MMmmmmmmMM              MM   "
+echo "MM                   MM        M   MM.M    MM      MM              MM   "
+echo "MM                  MM        M     YMM    MM      MM              MM   "
+echo "MM                .JMML.    .JML.    YM  .JMML.  .JMML.            MM   "
+echo "MM                                                                 MM   "
+echo "MM     AUTOR  : BIN01SYS AND ZER0G0LD                              MM   " 
+echo "MM     GITHUB BINSYS : https://github.com/Bin01Sys                 MM   "  
+echo "MM     GITHUB ZER0G0LD : https://github.com/Zer0G0ld               MM   "
+echo "MM                                                                 MM   "
+echo "mmmmmmm mmmmmmm mmmmmmm mmmmmmm mmmmmmm mmmmmmm mmmmmmm mmmmmmm mmmmmmm "
+echo ""
 
 # Parar o script em caso de erro
 set -e
