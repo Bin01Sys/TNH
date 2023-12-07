@@ -1,4 +1,4 @@
-<h1>TNH - TermuxNotifyHub</h1>
+# TNH - TermuxNotifyHub
 
 <p>
   O TermuxNotifyHub é uma ferramenta desenvolvida "exclusivamente" para a plataforma Termux, proporcionando notificações 
@@ -13,10 +13,37 @@
 </p>
 <br>
 <p>
-  O projeto foi criado no termux então só testei nele, mas pretendo modficar para poder ser usado nos computadores também
-  notificando via email ou padrão (depende do usuario)
+  O projeto foi alterado e agora temos `.bat` para o windows e `.sh` para linux e termux.
+
+  Ainda estamos testando eles e por enquanto não garanto funcionalidade 100% para tudo mas já temos uma base legal por enquanto 
 </p>
 
-<h1>Licença</h1>
+> Não criei para MacOS por que não tenho e não tem como testa-lo, então se quiser  tentar criar com base nos que estão aqui fação 
+
+## Instalação no Termux e Linux: 
+
+```Bash
+
+git clone https://github.com/Bin01Sys/TNH
+cd TNH
+chmod +x *
+
+```
+```
+./LinHUb.sh
+```
+or
+
+```
+./TermHub.sh
+```
+# Instalação no Windows
+
+<p>
+  Não entendo muito porém acredito que seja só baixar o <a href="https://github.com/Bin01Sys/TNH/blob/main/windows/WindHub.bat">código por aqui</a> não esqueça de salvar com `.bat` para ser aceitavel para o windows
+  ou se preferir usando o git seriam os mesmos comandos do linux ou termux passados acima.
+</p>
+
+# Licença
 
 <p>Projeto está sobre a licença <a href="https://github.com/Bin01Sys/TNH/blob/main/LICENSE">GNU General Public License v3.0</a></p>
