@@ -19,7 +19,8 @@
 # 
 # =================================================================================
 
-#!/usr/bin/bash
+#!/bin/bash
+
 echo """
                                                                 
 mmmmmmm mmmmmmm mmmmmmm mmmmmmm mmmmmmm mmmmmmm mmmmmmm mmmmmmm mmmmmmm
@@ -42,31 +43,37 @@ mmmmmmm mmmmmmm mmmmmmm mmmmmmm mmmmmmm mmmmmmm mmmmmmm mmmmmmm mmmmmmm
 # Parar o script em caso de erro
 set -e
 
-
-
 install_tool() {
-    tool_name=$1
+    local tool_name=$1
     echo "[ * ] $tool_name não está instalado. Tentando instalar..."
     
     case $tool_name in
-        "termux-battery-status") pkg install termux-api ;;
-        "jq") pkg install jq ;;
-        *) echo "[ x ] Ferramenta desconhecida. Não é possível instalar automaticamente." ;;
+        "termux-battery-status") 
+            pkg install termux-api ;;
+        "jq") 
+            pkg install jq ;;
+        *) 
+            echo "[ x ] Ferramenta desconhecida. Não é possível instalar automaticamente." ;;
     esac
 
-    echo "[ ✓ ] Instalação concluída com sucesso para $tool_name."
+    if [ $? -eq 0 ]; then
+        echo "[ ✓ ] Instalação concluída com sucesso para $tool_name."
+    else
+        echo "[ x ] Falha na instalação para $tool_name."
+        exit 1
+    fi
 }
 
 check_and_install() {
-    tool_name=$1
+    local tool_name=$1
     # Verifica se a ferramenta está disponível no sistema
     command -v "$tool_name" &> /dev/null || install_tool "$tool_name"
 }
 
 get_battery_status() {
     # Obter o status da bateria
-    result=$(termux-battery-status)
-    charge_level=$(echo "$result" | jq -r '.percentage')
+    local result=$(termux-battery-status)
+    local charge_level=$(echo "$result" | jq -r '.percentage')
 
     echo "Nível de carga da tua bateria: $charge_level%"
     # Notificar quando a bateria atingir 20%
@@ -75,8 +82,10 @@ get_battery_status() {
 
 get_network_info() {
     # Obter informações da rede
-    result=$(termux-network-status)
-    connect_status=$(echo "$result" | jq -r '.isConnected')
+    check_and_install termux-network-status
+    
+    local result=$(termux-network-status)
+    local connect_status=$(echo "$result" | jq -r '.isConnected')
 
     if [ "$connect_status" == true ]; then
         echo "O dispositivo está conectado à internet."
