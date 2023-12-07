@@ -42,61 +42,29 @@ echo "MM                                                                 MM   "
 echo "mmmmmmm mmmmmmm mmmmmmm mmmmmmm mmmmmmm mmmmmmm mmmmmmm mmmmmmm mmmmmmm "
 echo.
 
-REM Parar o script em caso de erro
-@setlocal enabledelayedexpansion
-set "error=false"
+echo.
+echo.
+echo "Bem-vindo ao Seu Software de Notificação para Windows"
+echo.
 
-:install_tool
-    set "tool_name=%1"
-    echo [ * ] %tool_name% não está instalado. Tentando instalar...
-    
-    if /I "%tool_name%"=="termux-battery-status" (
-        echo pkg install termux-api
-    ) else (
-        if /I "%tool_name%"=="jq" (
-            echo pkg install jq
-        ) else (
-            echo [ x ] Ferramenta desconhecida. Não é possível instalar automaticamente.
-            set "error=true"
-        )
-    )
+REM Obter o nível de carga da bateria
+for /f "tokens=2 delims=: " %%a in ('wmic path Win32_Battery get EstimatedChargeRemaining ^| findstr /r "."') do set "charge_level=%%a"
 
-    if not !error! == true (
-        echo [ ✓ ] Instalação concluída com sucesso para %tool_name%.
-    ) else (
-        echo [ x ] Falha na instalação para %tool_name%.
-        exit /b 1
-    )
+echo Nível de carga da bateria: %charge_level%
 
-:check_and_install
-    set "tool_name=%1"
-    REM Verifica se a ferramenta está disponível no sistema
-    where "%tool_name%" >nul 2>nul || call :install_tool "%tool_name%"
+REM Notificar quando a bateria atingir 20%
+if %charge_level% leq 20 (
+    msg * A bateria está em %charge_level%%. Carregue o dispositivo.
+)
 
-:get_battery_status
-    REM Obter o status da bateria
-    for /f "delims=" %%a in ('termux-battery-status') do set "result=%%a"
-    for /f "tokens=2 delims=: " %%b in ('echo %result% ^| jq -r ".percentage"') do set "charge_level=%%b"
+REM Verificar a conexão de rede
+ping -n 1 google.com >nul
+if errorlevel 1 (
+    echo O dispositivo não está conectado à internet.
+    msg * O dispositivo está sem conexão de rede.
+) else (
+    echo O dispositivo está conectado à internet.
+)
 
-    echo Nível de carga da tua bateria: %charge_level%%
-    REM Notificar quando a bateria atingir 20%
-    if %charge_level% leq 20 (
-        termux-notification --title "Bateria Baixa" --content "A bateria está em %charge_level%%. Carregue o dispositivo."
-    )
+pause
 
-:get_network_info
-    REM Obter informações da rede
-    call :check_and_install termux-network-status
-
-    for /f "delims=" %%a in ('termux-network-status') do set "result=%%a"
-    for /f "tokens=2 delims=: " %%c in ('echo %result% ^| jq -r ".isConnected"') do set "connect_status=%%c"
-
-    if "%connect_status%"=="true" (
-        echo O dispositivo está conectado à internet.
-    ) else (
-        echo O dispositivo não está conectado à internet.
-        termux-notification --title "Sem Conexão de Rede" --content "O dispositivo está sem conexão de rede."
-    )
-
-:end
-    endlocal
