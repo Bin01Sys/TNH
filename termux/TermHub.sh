@@ -21,39 +21,33 @@
 
 #!/bin/bash
 
-echo ""
-echo ""                                                                
+# Função para exibir mensagem com borda
+print_banner() {
+    cat << "EOF"
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+M                  _______  _   _  _    _                 M
+M                 |__   __|| \ | || |  | |                M
+M                    | |   |  \| || |__| |                M
+M                    | |   |     ||  __  |                M
+M                    | |   | |\  || |  | |                M
+M                    |_|   |_| \_||_|  |_|                M
+M                                                         M
+M   AUTOR  : BIN01SYS AND ZER0G0LD                        M
+M   GITHUB BINSYS : https://github.com/Bin01Sys           M
+M   GITHUB ZER0G0LD : https://github.com/Zer0G0ld         M
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+EOF
+}
 
-echo "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM"
-echo "M			 _______  _   _  _    _			 M"
-echo "M			|__   __|| \ | || |  | |		 M"
-echo "M			   | |   |  \| || |__| |		 M"
-echo "M			   | |   |     ||  __  |	 	 M"
-echo "M			   | |   | |\  || |  | |		 M"
-echo "M			   |_|   |_| \_||_|  |_|		 M"
-echo "M								 M"
-echo "M	  AUTOR  : BIN01SYS AND ZER0G0LD			 M" 
-echo "M	  GITHUB BINSYS : https://github.com/Bin01Sys	 	 M"
-echo "M	  GITHUB ZER0G0LD : https://github.com/Zer0G0ld	 	 M"
-echo "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM"
-
-echo ""
-echo ""
-
-# Parar o script em caso de erro
-set -e
-
+# Função para instalar ferramenta se não estiver instalada
 install_tool() {
     local tool_name=$1
     echo "[ * ] $tool_name não está instalado. Tentando instalar..."
-    
+
     case $tool_name in
-        "termux-battery-status") 
-            pkg install termux-api ;;
-        "jq") 
-            pkg install jq ;;
-        *) 
-            echo "[ x ] Ferramenta desconhecida. Não é possível instalar automaticamente." ;;
+        "termux-battery-status") pkg install termux-api ;;
+        "jq") pkg install jq ;;
+        *) echo "[ x ] Ferramenta desconhecida. Não é possível instalar automaticamente." ;;
     esac
 
     if [ $? -eq 0 ]; then
@@ -64,46 +58,49 @@ install_tool() {
     fi
 }
 
+# Função para verificar e instalar ferramenta
 check_and_install() {
     local tool_name=$1
-    # Verifica se a ferramenta está disponível no sistema
     command -v "$tool_name" &> /dev/null || install_tool "$tool_name"
 }
 
+# Função para obter o status da bateria e notificar se estiver baixa
 get_battery_status() {
-    # Obter o status da bateria
     local result=$(termux-battery-status)
     local charge_level=$(echo "$result" | jq -r '.percentage')
 
     echo "Nível de carga da tua bateria: $charge_level%"
-    # Notificar quando a bateria atingir 20%
+    
     if [ "$charge_level" -le 20 ]; then
-	    termux-notification --title "Bateria Baixa" --content "A bateria está em $charge_level%. Carregue o dispositivo."
+        termux-notification --title "Bateria Baixa" --content "A bateria está em $charge_level%. Carregue o dispositivo."
     fi
 }
 
+# Função para obter informações da rede e notificar se não houver conexão
 get_network_info() {
-    # Obter informações da rede 
     check_and_install termux-network-status
-   
+
     local result=$(termux-network-status)
     local connect_status=$(echo "$result" | jq -r '.isConnected')
 
     if [ "$connect_status" == true ]; then
-	    echo "O dispositivo está conectado à internet."
+        echo "O dispositivo está conectado à internet."
     else
-	    echo "O dispositivo não está conectado à internet."
-	    termux-notification --title "Sem Conexão de Rede" --content "O dispositivo está sem conexão de rede."
+        echo "O dispositivo não está conectado à internet."
+        termux-notification --title "Sem Conexão de Rede" --content "O dispositivo está sem conexão de rede."
     fi
-    
 }
 
-# Chamando as funções
+# Executando as funções
+echo -e "\n\n"
+print_banner
+echo -e "\n\n"
+
+set -e  # Parar o script em caso de erro
+
 check_and_install termux-api
 check_and_install jq
 get_battery_status
 get_network_info
-
-
 
 
